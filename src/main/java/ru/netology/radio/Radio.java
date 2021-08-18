@@ -50,7 +50,7 @@ public class Radio {
     public int nextStation() {
         if (currentStation < lastStation) {
             currentStation += 1;
-        } else if (currentStation == lastStation) {
+        } else {
             currentStation = 0;
         }
         return currentStation;
@@ -60,7 +60,7 @@ public class Radio {
     public int prevStation() {
         if (currentStation > firstStation) {
             currentStation -= 1;
-        } else if (currentStation == firstStation) {
+        } else {
             currentStation = 9;
         }
         return currentStation;
