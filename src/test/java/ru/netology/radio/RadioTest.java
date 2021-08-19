@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+    public int defaultStations = 10; // выставляем макс кол-во станций по умолчанию для тестов
 
     @Test // выбор станции
     void setCurrentStation() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentStation(2);
         int expected = 2;
@@ -18,7 +19,7 @@ class RadioTest {
     }
 
     @Test // выбор станции если другое количество
-    void setCurrentStationIf20Ststion() {
+    void setCurrentStationIf20Station() {
         Radio radio = new Radio(20);
 
         radio.setCurrentStation(18);
@@ -31,7 +32,7 @@ class RadioTest {
     @Test // станция не меньше 0
 
     void shouldNotSetCurrentStationLow0() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentStation(-2);
         int expected = 0;
@@ -42,7 +43,7 @@ class RadioTest {
 
     @Test // станция не больше 9
     void shouldNotSetCurrentStationHigher9() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentStation(22);
         int expected = 0;
@@ -53,7 +54,7 @@ class RadioTest {
 
     @Test // прибавляем станцию
     void shouldSetNextStation() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentStation(8);
         int actual = radio.nextStation();
@@ -63,8 +64,8 @@ class RadioTest {
     }
 
     @Test // после последней идет первая (9->0)
-    void shouldSet0StationIfSetLast() {
-        Radio radio = new Radio(20);
+    void shouldSetFirstStationIfSetLast() {
+        Radio radio = new Radio(25);
 
         radio.setCurrentStation(radio.getLastStation()); //устанавливаем последнюю станцию
         int actual = radio.nextStation();
@@ -75,7 +76,7 @@ class RadioTest {
 
     @Test // убавляем станцию
     void shouldSetPrevStation() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentStation(2);
         int actual = radio.prevStation();
@@ -86,8 +87,8 @@ class RadioTest {
 
 
     @Test // после первой идет последняя (0->9)
-    void shouldSet9StationIfSetFirst() {
-        Radio radio = new Radio();
+    void shouldSetLastStationIfSetFirst() {
+        Radio radio = new Radio(20);
 
         radio.setCurrentStation(radio.getFirstStation());
         int actual = radio.prevStation();
@@ -98,7 +99,7 @@ class RadioTest {
 
     @Test // проверяем максимум громкости
     void shouldNotSetHigherMaxVolume() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentVolume(120);
         int actual = radio.getCurrentVolume();
@@ -109,7 +110,7 @@ class RadioTest {
 
     @Test // проверяем минимум громкости
     void shouldNotSetLowerMinVolume() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentVolume(-5);
         int actual = radio.getCurrentVolume();
@@ -120,7 +121,7 @@ class RadioTest {
 
     @Test // увеличиваем громкость
     void shouldIncreaseVolume() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         int actual = radio.increaseVolume();
         int expected = 1;
@@ -130,7 +131,7 @@ class RadioTest {
 
     @Test // не увеличить после максимума
     void shouldNotIncreaseVolumeIfMax() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentVolume(radio.getMaxVolume());
         int actual = radio.increaseVolume();
@@ -141,7 +142,7 @@ class RadioTest {
 
     @Test // уменьшаем громкость
     void shouldDecreaseVolume() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentVolume(5);
         int actual = radio.decreaseVolume();
@@ -152,7 +153,7 @@ class RadioTest {
 
     @Test // не убавить если минимум
     void shouldNotDecreaseVolumeIfMin() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(defaultStations);
 
         radio.setCurrentVolume(radio.getMinVolume());
         int actual = radio.decreaseVolume();

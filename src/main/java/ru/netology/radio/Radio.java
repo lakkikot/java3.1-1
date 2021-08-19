@@ -1,37 +1,31 @@
 package ru.netology.radio;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Radio {
 
-    public Radio() {
-
-    }
-
-    public Radio(int amountStations) {
-        this.lastStation = amountStations - 1; // т.к. нумерация с нуля
-    }
-
+    private final int amountStations;
     private int firstStation = 0;
-    private int lastStation = 9;
+    private int lastStation;
     private int currentStation;
 
     private int minVolume = 0;
     private int maxVolume = 100;
     private int currentVolume;
 
-    public int getFirstStation() {
-        return firstStation;
-    }
-
-     public int getLastStation() {
+    public int getLastStation() {
+       lastStation = amountStations - 1;
         return lastStation;
     }
 
-     public int getCurrentStation() {
-        return currentStation;
-    }
-
     public void setCurrentStation(int currentStation) {
-        if (currentStation > lastStation) {
+        if (currentStation > getLastStation()) {
             return;
         }
         if (currentStation < firstStation) {
@@ -42,7 +36,7 @@ public class Radio {
 
     // переключить на следующую станцию
     public int nextStation() {
-        if (currentStation < lastStation) {
+        if (currentStation < getLastStation()) {
             currentStation += 1;
         } else {
             currentStation = firstStation;
@@ -55,23 +49,11 @@ public class Radio {
         if (currentStation > firstStation) {
             currentStation -= 1;
         } else {
-            currentStation = lastStation;
+            currentStation = getLastStation();
         }
 
         return currentStation;
 
-    }
-
-    public int getMinVolume() {
-        return minVolume;
-    }
-
-    public int getMaxVolume() {
-        return maxVolume;
-    }
-
-    public int getCurrentVolume() {
-        return currentVolume;
     }
 
     public void setCurrentVolume(int currentVolume) {
